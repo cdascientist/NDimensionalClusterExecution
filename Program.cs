@@ -23,7 +23,11 @@ namespace NDimensionalClusterExecution
             double densityRadius = 0.2; // radius for density check
             int maxIter = 100;          // max K-means iterations
 
+            // === DISPLAY COMPLETE MATHEMATICAL FORMULA ===
+            PrintCompleteFormula();
+
             // === RUN THE CLUSTER PIPELINE ===
+            // Formula: ND(x₁,…,xₙ) = densityNormalizedKMeans → tensorVelocity
             // Returns K base vertices + 1 apex vertex in ℝⁿ⁺¹
             var vertices = ComputeDensityNormalizedKMeansPipeline(
                 rawData, K, densityRadius, maxIter);
@@ -32,6 +36,239 @@ namespace NDimensionalClusterExecution
             ComputeTensorAndVelocity(vertices);
         }
 
+        /// <summary>
+        /// Contains the complete compiled mathematical formula for the N-Dimensional Cluster Execution pipeline.
+        /// This can be copy-pasted for documentation, papers, or other implementations.
+        /// </summary>
+        static void PrintCompleteFormula()
+        {
+            string compiledFormula = GetCompiledFormula();
+
+            Console.WriteLine("=".PadRight(80, '='));
+            Console.WriteLine("N-DIMENSIONAL CLUSTER EXECUTION - COMPLETE MATHEMATICAL FORMULA");
+            Console.WriteLine("=".PadRight(80, '='));
+            Console.WriteLine();
+            Console.WriteLine("ALGORITHM DESCRIPTION:");
+            Console.WriteLine("This algorithm implements a density-normalized K-means clustering pipeline that:");
+            Console.WriteLine("1. Normalizes input data to [0,1] hypercube");
+            Console.WriteLine("2. Computes local density for intelligent cluster seeding");
+            Console.WriteLine("3. Performs K-means clustering with density-based initialization");
+            Console.WriteLine("4. Refines centroids using density-weighted averaging");
+            Console.WriteLine("5. Lifts 2D clusters into 3D geometric structure (simplex)");
+            Console.WriteLine("6. Computes directional tensors and velocity vectors with inverses");
+            Console.WriteLine();
+            Console.WriteLine("MATHEMATICAL FOUNDATION:");
+            Console.WriteLine("The algorithm transforms raw data X ∈ ℝⁿˣᵈ into a geometric structure");
+            Console.WriteLine("in ℝᵈ⁺¹ with associated tensor fields, enabling topological analysis");
+            Console.WriteLine("of cluster relationships and directional flow computations.");
+            Console.WriteLine();
+            Console.WriteLine("COPY-PASTE FORMULA:");
+            Console.WriteLine("─".PadRight(80, '─'));
+            Console.WriteLine(compiledFormula);
+            Console.WriteLine("─".PadRight(80, '─'));
+            Console.WriteLine();
+
+            // === N-DIMENSIONAL EXPRESSION GENERATION ===
+            PrintNDimensionalExpressions();
+        }
+
+        /// <summary>
+        /// Generates and displays N-dimensional expressions for different pipeline components
+        /// </summary>
+        static void PrintNDimensionalExpressions()
+        {
+            Console.WriteLine("=".PadRight(80, '='));
+            Console.WriteLine("N-DIMENSIONAL EXPRESSIONS - PIPELINE COMPONENTS");
+            Console.WriteLine("=".PadRight(80, '='));
+            Console.WriteLine();
+
+            // Generate expressions for different pipeline keys
+            string[] logicKeys = { "densityNormalizedKMeans", "tensorVelocity", "completePipeline" };
+
+            foreach (string logicKey in logicKeys)
+            {
+                // 1) Convert the logic key into a regex "pattern"
+                string regexPattern = ConvertLogicToRegex(logicKey);
+
+                // 2) Convert that regex pattern into an n-dimensional expression
+                string ndExpression = ConvertRegexToNDimensionalExpression(regexPattern);
+
+                // === OUTPUT TO CONSOLE ===
+                Console.WriteLine($"Logic Key:       {logicKey}");
+                Console.WriteLine($"Regex Pattern:   {regexPattern}");
+                Console.WriteLine($"ND Expression:{ndExpression}");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("─".PadRight(80, '─'));
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Maps a high-level clustering logic identifier into a regex pattern
+        /// that "captures" the key operations.
+        /// </summary>
+        static string ConvertLogicToRegex(string logic)
+        {
+            if (logic == "densityNormalizedKMeans")
+            {
+                // density -> kmeans -> refine
+                return @"(density\([^\)]+\))\s*->\s*(kmeans\([^\)]+\))\s*->\s*(refine\([^\)]+\))";
+            }
+            if (logic == "tensorVelocity")
+            {
+                // tensor + velocity
+                return @"(tensor\([^\)]+\))\s*\+\s*(velocity\([^\)]+\))";
+            }
+            if (logic == "completePipeline")
+            {
+                // complete pipeline with all phases
+                return @"(normalize\([^\)]+\))\s*->\s*(density\([^\)]+\))\s*->\s*(kmeans\([^\)]+\))\s*->\s*(refine\([^\)]+\))\s*->\s*(lift\([^\)]+\))\s*->\s*(tensor\([^\)]+\))\s*\+\s*(velocity\([^\)]+\))";
+            }
+            // fallback for anything else
+            return @"(\w+)";
+        }
+
+        /// <summary>
+        /// Converts a regex‐style "capture" of our clustering pipeline
+        /// into a single, compute-safe n-dimensional expression string.
+        /// </summary>
+        static string ConvertRegexToNDimensionalExpression(string regexPattern)
+        {
+            // complete pipeline with all phases
+            if (System.Text.RegularExpressions.Regex.IsMatch(regexPattern, @"normalize\([^\)]+\)\s*->\s*density\([^\)]+\)\s*->\s*kmeans\([^\)]+\)\s*->\s*refine\([^\)]+\)\s*->\s*lift\([^\)]+\)\s*->\s*tensor\([^\)]+\)\s*\+\s*velocity"))
+            {
+                return GetCompiledFormula();
+            }
+            // density‐normalized K-means pipeline
+            if (System.Text.RegularExpressions.Regex.IsMatch(regexPattern, @"density\([^\)]+\)\s*->\s*kmeans"))
+            {
+                return @"
+ND(x₁,…,xₙ) =
+  // 1) Density seeding: pick top‐density points
+  μⱼ⁽⁰⁾ ← argmaxₓ ∑_{y:‖x−y‖≤r} 1
+  // 2) K-means loop:
+  μⱼ⁽ᵗ⁺¹⁾ ← (1/|Cⱼ|) ∑_{x∈Cⱼ} x
+  // 3) Refinement: density‐weighted mean
+  μⱼ′ ← (∑_{x∈Cⱼ, d(x)≥d̄ⱼ} d(x)·x) / ∑_{…} d(x)
+  // 4) Relative centroid:
+  μ_rel = (1/K) ∑ⱼ μⱼ′
+  // 5) Apex lift to ℝⁿ⁺¹:
+  apex = (μ_rel, ‖μ_rel‖)
+  // 6) Unit‐normalize all K+1 vertices
+";
+            }
+            // tensor + velocity pipeline
+            if (System.Text.RegularExpressions.Regex.IsMatch(regexPattern, @"tensor\([^\)]+\)\s*\+\s*velocity"))
+            {
+                return @"
+ND(x₁,…,xₙ) =
+  // Base centroid:
+  b = (1/K) ∑ baseᵢ
+  // Direction & magnitude:
+  d = apex − b, ‖d‖ = mag
+  u = d / mag
+  // Tensor:
+  T = u ⊗ u
+  // Velocity:
+  v = mag · u
+";
+            }
+            // generic fallback
+            return @"
+ND(x₁,…,xₙ) = x₁ + x₂ + … + xₙ
+";
+        }
+
+        /// <summary>
+        /// Returns the complete compiled mathematical formula as a string for easy copy-pasting.
+        /// </summary>
+        static string GetCompiledFormula()
+        {
+            return @"
+NDimensionalClusterExecution(X, K, r, maxIter) = 
+{
+  // === PHASE 1: DATA PREPROCESSING ===
+  // Input: X = {x₁, x₂, ..., xₙ} ∈ ℝⁿˣᵈ
+  
+  // 1.1) Min-Max Normalization to [0,1]ᵈ
+  x'ᵢ = (xᵢ - min(X)) / (max(X) - min(X))
+  
+  // 1.2) Local Density Computation
+  d(xᵢ) = ∑_{j≠i} 𝟙[‖xᵢ - xⱼ‖₂ ≤ r]
+  
+  // === PHASE 2: DENSITY-NORMALIZED K-MEANS ===
+  
+  // 2.1) Density-Based Seeding
+  Seeds = argmax_{K} {d(xᵢ) : i ∈ {1,...,n}}
+  μⱼ⁽⁰⁾ = x_{Seeds[j]} for j ∈ {1,...,K}
+  
+  // 2.2) K-Means Iteration Loop
+  repeat until convergence or maxIter:
+    // Assignment: Cⱼ = {xᵢ : ‖xᵢ - μⱼ‖₂ ≤ ‖xᵢ - μₖ‖₂ ∀k}
+    // Update: μⱼ⁽ᵗ⁺¹⁾ = (1/|Cⱼ|) ∑_{x∈Cⱼ} x
+  
+  // 2.3) Density-Weighted Refinement
+  d̄ⱼ = (1/|Cⱼ|) ∑_{x∈Cⱼ} d(x)                    // average density
+  Hⱼ = {x ∈ Cⱼ : d(x) ≥ d̄ⱼ}                       // high-density subset
+  μⱼ' = (∑_{x∈Hⱼ} d(x)·x) / (∑_{x∈Hⱼ} d(x))       // density-weighted centroid
+  
+  // === PHASE 3: GEOMETRIC LIFTING TO ℝᵈ⁺¹ ===
+  
+  // 3.1) Relative Centroid
+  μᵣₑₗ = (1/K) ∑ⱼ μⱼ'
+  
+  // 3.2) Simplex Construction
+  baseⱼ = (μⱼ', 0) ∈ ℝᵈ⁺¹                         // base vertices at z=0
+  apex = (μᵣₑₗ, ‖μᵣₑₗ‖₂) ∈ ℝᵈ⁺¹                   // apex at z=‖μᵣₑₗ‖
+  
+  // === PHASE 4: TENSOR & VELOCITY COMPUTATION ===
+  
+  // 4.1) Base Centroid & Direction
+  b = (1/K) ∑ⱼ baseⱼ                              // geometric center of bases
+  d = apex - b                                    // direction vector
+  
+  // 4.2) Magnitude & Unit Direction
+  mag = ‖d‖₂                                     // magnitude
+  u = d / mag                                     // unit direction vector
+  
+  // 4.3) Tensor Field (Rank-1)
+  T = u ⊗ u ∈ ℝ⁽ᵈ⁺¹⁾ˣ⁽ᵈ⁺¹⁾                        // outer product tensor
+  
+  // 4.4) Velocity Field
+  v = mag · u                                     // velocity vector
+  
+  // === PHASE 5: INVERSE COMPUTATIONS ===
+  
+  // 5.1) Component-wise Inverses (with ∞ for zeros)
+  d⁻¹ᵢ = {1/dᵢ  if |dᵢ| > ε, ∞ otherwise}
+  u⁻¹ᵢ = {1/uᵢ  if |uᵢ| > ε, ∞ otherwise}
+  v⁻¹ᵢ = {1/vᵢ  if |vᵢ| > ε, ∞ otherwise}
+  mag⁻¹ = 1/mag
+  
+  // 5.2) Tensor Pseudoinverse (Moore-Penrose)
+  T⁺ = (1/‖u‖₂²) · T  when u ≠ 0
+  
+  // === OUTPUT ===
+  return {
+    vertices: {base₁, base₂, ..., baseₖ, apex},
+    direction: d, magnitude: mag, unit: u,
+    tensor: T, tensor_inverse: T⁺,
+    velocity: v, inverses: {d⁻¹, u⁻¹, v⁻¹, mag⁻¹}
+  }
+}
+
+// COMPLEXITY: O(n² + K·n·maxIter) time, O(n·d + K·d) space
+// APPLICATIONS: Topological data analysis, cluster flow dynamics, 
+//               geometric machine learning, n-dimensional pattern recognition
+";
+        }
+
+        /// <summary>
+        /// Implements the density-normalized K-means pipeline:
+        /// Formula: μⱼ⁽⁰⁾ ← argmaxₓ ∑_{y:‖x−y‖≤r} 1 → μⱼ⁽ᵗ⁺¹⁾ ← (1/|Cⱼ|) ∑_{x∈Cⱼ} x → 
+        ///          μⱼ′ ← (∑_{x∈Cⱼ, d(x)≥d̄ⱼ} d(x)·x) / ∑_{…} d(x) → apex = (μ_rel, ‖μ_rel‖)
+        /// </summary>
         static double[][] ComputeDensityNormalizedKMeansPipeline(
             double[][] raw, int K, double radius, int maxIter)
         {
@@ -42,7 +279,8 @@ namespace NDimensionalClusterExecution
             for (int i = 0; i < n; i++)
                 Console.WriteLine($"Point {i}: ({string.Join(", ", raw[i].Select(x => x.ToString("F16")))})");
 
-            // 1) Min–Max normalize to [0,1]
+            // === STEP 1: MIN-MAX NORMALIZATION ===
+            // Formula: x'ᵢ = (xᵢ - min(x)) / (max(x) - min(x))
             double[] minVals = new double[dim], maxVals = new double[dim];
             for (int d = 0; d < dim; d++)
             {
@@ -66,7 +304,8 @@ namespace NDimensionalClusterExecution
             for (int i = 0; i < n; i++)
                 Console.WriteLine($"Norm Point {i}: ({string.Join(", ", data[i].Select(x => x.ToString("F16")))})");
 
-            // 2) Local density count
+            // === STEP 2: LOCAL DENSITY COMPUTATION ===
+            // Formula: d(xᵢ) = ∑_{j≠i} 𝟙[‖xᵢ - xⱼ‖ ≤ r]
             int[] density = new int[n];
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
@@ -77,7 +316,8 @@ namespace NDimensionalClusterExecution
             for (int i = 0; i < n; i++)
                 Console.WriteLine($"Point {i} density: {density[i]}");
 
-            // 3) Seed centroids at top-density points
+            // === STEP 3: DENSITY-BASED SEEDING ===
+            // Formula: μⱼ⁽⁰⁾ ← argmaxₓ ∑_{y:‖x−y‖≤r} 1 (top K density points)
             var seeds = density
                 .Select((d, idx) => new { d, idx })
                 .OrderByDescending(x => x.d)
@@ -96,12 +336,13 @@ namespace NDimensionalClusterExecution
             bool moved;
             int iter = 0;
 
-            // 4) K-means on normalized data
+            // === STEP 4: K-MEANS CLUSTERING ===
+            // Formula: μⱼ⁽ᵗ⁺¹⁾ ← (1/|Cⱼ|) ∑_{x∈Cⱼ} x
             do
             {
                 moved = false;
 
-                // Assign step
+                // Assignment step: Cⱼ = {x : ‖x - μⱼ‖ ≤ ‖x - μₖ‖ ∀k}
                 for (int i = 0; i < n; i++)
                 {
                     double best = Euclid(data[i], centroids[0]);
@@ -118,7 +359,7 @@ namespace NDimensionalClusterExecution
                     }
                 }
 
-                // Update step
+                // Update step: μⱼ⁽ᵗ⁺¹⁾ ← (1/|Cⱼ|) ∑_{x∈Cⱼ} x
                 var sums = new double[K][];
                 var counts = new int[K];
                 for (int c = 0; c < K; c++)
@@ -152,7 +393,8 @@ namespace NDimensionalClusterExecution
                 }
             }
 
-            // 5) Refine centroids via density-weighted mean of high-density points
+            // === STEP 5: DENSITY-WEIGHTED REFINEMENT ===
+            // Formula: μⱼ′ ← (∑_{x∈Cⱼ, d(x)≥d̄ⱼ} d(x)·x) / (∑_{x∈Cⱼ, d(x)≥d̄ⱼ} d(x))
             double[][] refined = new double[K][];
             for (int c = 0; c < K; c++)
             {
@@ -160,9 +402,9 @@ namespace NDimensionalClusterExecution
                     .Select((pt, idx) => new { Pt = pt, D = density[idx], L = labels[idx], Idx = idx })
                     .Where(x => x.L == c)
                     .ToArray();
-                double avgD = pts.Average(x => x.D);
-                var high = pts.Where(x => x.D >= avgD).ToArray();
-                double wsum = high.Sum(x => x.D);
+                double avgD = pts.Average(x => x.D);  // d̄ⱼ = average density in cluster j
+                var high = pts.Where(x => x.D >= avgD).ToArray();  // high-density subset
+                double wsum = high.Sum(x => x.D);  // ∑ d(x) for normalization
                 refined[c] = new double[dim];
 
                 Console.WriteLine($"\n=== REFINEMENT FOR CLUSTER {c} ===");
@@ -171,6 +413,7 @@ namespace NDimensionalClusterExecution
 
                 if (wsum > 0)
                 {
+                    // Density-weighted centroid: μⱼ′ = (∑ d(x)·x) / (∑ d(x))
                     for (int d = 0; d < dim; d++)
                         refined[c][d] = high.Sum(x => x.Pt[d] * x.D) / wsum;
 
@@ -188,7 +431,8 @@ namespace NDimensionalClusterExecution
                 }
             }
 
-            // 6) Compute 2D relative centroid μ_rel
+            // === STEP 6: RELATIVE CENTROID COMPUTATION ===
+            // Formula: μ_rel = (1/K) ∑ⱼ μⱼ′
             double[] rel = new double[dim];
             for (int c = 0; c < K; c++)
                 for (int d = 0; d < dim; d++)
@@ -203,8 +447,9 @@ namespace NDimensionalClusterExecution
             Console.WriteLine($"Sum: ({string.Join(", ", rel.Select(x => (x * K).ToString("F16")))})");
             Console.WriteLine($"Average (μ_rel): ({string.Join(", ", rel.Select(x => x.ToString("F16")))})");
 
-            // 7) Lift into ℝⁿ⁺¹: base at z=0, apex z=‖μ_rel‖
-            double relNorm = Math.Sqrt(rel.Sum(v => v * v));
+            // === STEP 7: GEOMETRIC LIFT TO ℝⁿ⁺¹ ===
+            // Formula: apex = (μ_rel, ‖μ_rel‖), baseᵢ = (μᵢ′, 0)
+            double relNorm = Math.Sqrt(rel.Sum(v => v * v));  // ‖μ_rel‖
 
             Console.WriteLine($"\n=== APEX Z-COORDINATE CALCULATION ===");
             Console.WriteLine($"μ_rel components: ({string.Join(", ", rel.Select(x => x.ToString("F16")))})");
@@ -214,8 +459,8 @@ namespace NDimensionalClusterExecution
 
             double[][] vertices = new double[K + 1][];
             for (int c = 0; c < K; c++)
-                vertices[c] = refined[c].Concat(new[] { 0.0 }).ToArray();
-            vertices[K] = rel.Concat(new[] { relNorm }).ToArray();
+                vertices[c] = refined[c].Concat(new[] { 0.0 }).ToArray();  // baseᵢ = (μᵢ′, 0)
+            vertices[K] = rel.Concat(new[] { relNorm }).ToArray();  // apex = (μ_rel, ‖μ_rel‖)
 
             Console.WriteLine($"\n=== FINAL 3D VERTICES (ℝⁿ⁺¹) ===");
             for (int c = 0; c < K; c++)
@@ -225,13 +470,18 @@ namespace NDimensionalClusterExecution
             return vertices;
         }
 
+        /// <summary>
+        /// Computes tensor and velocity from the geometric structure:
+        /// Formula: b = (1/K) ∑ baseᵢ, d = apex − b, u = d/‖d‖, T = u ⊗ u, v = ‖d‖ · u
+        /// </summary>
         static void ComputeTensorAndVelocity(double[][] verts)
         {
             int m = verts[0].Length;      // dimension (n+1)
             int K = verts.Length - 1;     // number of base vertices
             double[] apex = verts[K];
 
-            // 1) base-centroid b = (1/K) ∑ baseᵢ
+            // === STEP 1: BASE CENTROID ===
+            // Formula: b = (1/K) ∑ᵢ baseᵢ
             double[] b = new double[m];
             for (int i = 0; i < K; i++)
                 for (int d = 0; d < m; d++)
@@ -245,7 +495,8 @@ namespace NDimensionalClusterExecution
                 Console.WriteLine($"  V{i}: ({string.Join(", ", verts[i].Select(x => x.ToString("F16")))})");
             Console.WriteLine($"Base centroid b: ({string.Join(", ", b.Select(x => x.ToString("F16")))})");
 
-            // 2) direction vector d = apex − b
+            // === STEP 2: DIRECTION VECTOR ===
+            // Formula: d = apex − b
             double[] dir = new double[m];
             for (int d = 0; d < m; d++)
                 dir[d] = apex[d] - b[d];
@@ -255,22 +506,23 @@ namespace NDimensionalClusterExecution
             Console.WriteLine($"Base centroid: ({string.Join(", ", b.Select(x => x.ToString("F16")))})");
             Console.WriteLine($"Direction d = apex - b: ({string.Join(", ", dir.Select(x => x.ToString("F16")))})");
 
-            // 3) magnitude = ‖d‖
-            double mag = Math.Sqrt(dir.Sum(x => x * x));
+            // === STEP 3: MAGNITUDE & UNIT DIRECTION ===
+            // Formula: ‖d‖ = magnitude, u = d / ‖d‖
+            double mag = Math.Sqrt(dir.Sum(x => x * x));  // ‖d‖
+            double[] u = dir.Select(x => x / mag).ToArray();  // u = d / ‖d‖
 
-            // 4) unit direction u = d / mag
-            double[] u = dir.Select(x => x / mag).ToArray();
-
-            // 5) tensor T = u ⊗ u (outer product)
+            // === STEP 4: TENSOR COMPUTATION ===
+            // Formula: T = u ⊗ u (outer product)
             double[,] T = new double[m, m];
             for (int i = 0; i < m; i++)
                 for (int j = 0; j < m; j++)
                     T[i, j] = u[i] * u[j];
 
-            // 6) velocity v = mag · u
+            // === STEP 5: VELOCITY COMPUTATION ===
+            // Formula: v = ‖d‖ · u
             double[] v = u.Select(x => x * mag).ToArray();
 
-            // ==== Inverses with NaN Resolution ====
+            // === INVERSE COMPUTATIONS WITH NaN RESOLUTION ===
             const double EPSILON = 1e-10;  // Small value to handle near-zero cases
 
             // Inverse of direction: component-wise reciprocal or special handling
@@ -306,8 +558,8 @@ namespace NDimensionalClusterExecution
                     invV[i] = 1.0 / v[i];
             }
 
-            // For rank-1 tensor, use Moore-Penrose pseudoinverse
-            // For T = u⊗u, the pseudoinverse is T⁺ = (1/‖u‖²) * u⊗u when u≠0
+            // === TENSOR PSEUDOINVERSE ===
+            // Formula: For T = u⊗u, T⁺ = (1/‖u‖²) * u⊗u when u≠0 (Moore-Penrose)
             double[,] invT = null;
             double uNormSq = u.Sum(x => x * x);
             if (uNormSq > EPSILON)
@@ -378,7 +630,10 @@ namespace NDimensionalClusterExecution
                 return val.ToString("F16");
         }
 
-        // Euclidean distance in any dimension
+        /// <summary>
+        /// Euclidean distance in any dimension
+        /// Formula: ‖a - b‖ = √(∑ᵢ (aᵢ - bᵢ)²)
+        /// </summary>
         static double Euclid(double[] a, double[] b)
         {
             double sum = 0;
@@ -387,7 +642,10 @@ namespace NDimensionalClusterExecution
             return Math.Sqrt(sum);
         }
 
-        // General Gauss-Jordan inversion for any square matrix
+        /// <summary>
+        /// General Gauss-Jordan inversion for any square matrix
+        /// Formula: A⁻¹ such that A·A⁻¹ = I
+        /// </summary>
         static double[,] InvertMatrix(double[,] A)
         {
             int n = A.GetLength(0);
